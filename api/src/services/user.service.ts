@@ -13,8 +13,10 @@ export async function register(data: RegisterInput) {
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const user = await userRepo.createUser({
-        ...data,
+        name: data.name,
+        email: data.email,
         password: hashedPassword,
+        role: data.role || "STUDENT",
     });
 
     return user;
@@ -32,7 +34,7 @@ export async function login(data: LoginInput) {
     }
 
     const token = jwt.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, email: user.email, role: user.role },
         env.JWT_SECRET,
         { expiresIn: "1d" }
     );
@@ -45,5 +47,7 @@ export async function getProfile(id: string) {
     if (!user) {
         throw new Error("User not found");
     }
-    return user;
+    // Return profile without password
+    const { password, ...profile } = user;
+    return profile;
 }

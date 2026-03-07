@@ -5,6 +5,7 @@ import morgan from "morgan";
 import chatRoutes from "./routes/chat.routes";
 import practiceRoutes from "./routes/practice.routes";
 import userRoutes from "./routes/user.routes";
+import classroomRoutes from "./routes/classroom.routes";
 
 import { errorMiddleware } from "./middleware/error.middleware";
 
@@ -22,6 +23,7 @@ Routes
 app.use("/api/chat", chatRoutes);
 app.use("/api/practice", practiceRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/classrooms", classroomRoutes);
 
 /*
 Health check
