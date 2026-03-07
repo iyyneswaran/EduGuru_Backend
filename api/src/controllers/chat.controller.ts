@@ -16,8 +16,12 @@ export const sendChatMessage = async (
             success: true,
             data: response
         });
-    } catch (error) {
-        next(error);
+    } catch (error: any) {
+        console.error("[CHAT CONTROLLER ERROR]", error.message);
+        res.status(500).json({
+            success: false,
+            error: error.message || "Something went wrong. Please try again.",
+        });
     }
 };
 
