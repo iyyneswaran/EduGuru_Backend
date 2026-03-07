@@ -13,3 +13,7 @@ class PracticeResponse(BaseModel):
 class ConceptMapResponse(BaseModel):
     nodes: List[Dict]
     edges: List[Dict]
+
+
+class ChatResponse(BaseModel):
+    reply: str

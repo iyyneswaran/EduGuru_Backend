@@ -21,3 +21,15 @@ export async function generatePractice(topic: string, difficulty: string) {
 
     return response.data.questions;
 }
+
+export async function getChatResponse(
+    message: string,
+    history: { role: string; content: string }[] = []
+) {
+    const response = await axios.post(`${AI_BASE}/chat`, {
+        message,
+        history,
+    });
+
+    return response.data.reply;
+}

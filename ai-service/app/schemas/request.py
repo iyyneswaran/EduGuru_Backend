@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class ExplainRequest(BaseModel):
@@ -13,3 +14,13 @@ class PracticeRequest(BaseModel):
 
 class ConceptMapRequest(BaseModel):
     topic: str
+
+
+class ChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class ChatRequest(BaseModel):
+    message: str
+    history: Optional[list[ChatMessage]] = None
