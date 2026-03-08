@@ -11,7 +11,14 @@ import { errorMiddleware } from "./middleware/error.middleware";
 
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: ["http://localhost:5173", "https://edu-guru-frontend.vercel.app"],
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+    })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
