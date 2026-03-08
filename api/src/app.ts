@@ -14,7 +14,7 @@ const app = express();
 app.use(
     cors({
         origin: function (origin, callback) {
-            // Allow requests with no origin (like mobile apps or curl requests)
+            // Allow requests with no origin (like mobile apps, curl, or preflight OPTIONS without origin)
             if (!origin) return callback(null, true);
 
             const allowedOrigins = [
@@ -31,9 +31,11 @@ app.use(
         },
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization", "Accept"],
+        allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
+        optionsSuccessStatus: 200 // Some legacy browsers choke on 204
     })
 );
+app.options("*", cors()); // Enable pre-flight across-the-board
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
