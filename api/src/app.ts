@@ -11,31 +11,30 @@ import { errorMiddleware } from "./middleware/error.middleware";
 
 const app = express();
 
-app.use(
-    cors({
-        origin: function (origin, callback) {
-            // Allow requests with no origin (like mobile apps, curl, or preflight OPTIONS without origin)
-            if (!origin) return callback(null, true);
+const corsOptions: cors.CorsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl, or preflight OPTIONS without origin)
+        if (!origin) return callback(null, true);
 
-            const allowedOrigins = [
-                "http://localhost:5173",
-                "http://localhost:3000",
-                "https://edu-guru-frontend.vercel.app"
-            ];
+        const allowedOrigins = [
+            "http://localhost:5173",
+            "http://localhost:3000",
+            "https://edu-guru-frontend.vercel.app"
+        ];
 
-            if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".vercel.app")) {
-                callback(null, true);
-            } else {
-                callback(new Error("Not allowed by CORS"));
-            }
-        },
-        credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
-        optionsSuccessStatus: 200 // Some legacy browsers choke on 204
-    })
-);
-app.options("/*", cors()); // Enable pre-flight across-the-board
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".vercel.app")) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
+    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
