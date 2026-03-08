@@ -31,7 +31,7 @@ export const getClassrooms = async (req: Request, res: Response, next: NextFunct
 
 export const getClassroom = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const classroom = await classroomService.getClassroom(req.params.id);
+        const classroom = await classroomService.getClassroom(req.params.id as string);
         res.json({ success: true, data: classroom });
     } catch (error) {
         next(error);
@@ -51,7 +51,7 @@ export const joinClassroom = async (req: Request, res: Response, next: NextFunct
 
 export const getClassroomMembers = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const members = await classroomService.getClassroomMembers(req.params.id);
+        const members = await classroomService.getClassroomMembers(req.params.id as string);
         res.json({ success: true, data: members });
     } catch (error) {
         next(error);
@@ -63,7 +63,7 @@ export const getClassroomMembers = async (req: Request, res: Response, next: Nex
 export const createModule = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { title, description, content, order } = req.body;
-        const module = await classroomService.createModule(req.params.id, { title, description, content, order: Number(order) || 0 });
+        const module = await classroomService.createModule(req.params.id as string, { title, description, content, order: Number(order) || 0 });
         res.status(201).json({ success: true, data: module });
     } catch (error) {
         next(error);
@@ -73,7 +73,7 @@ export const createModule = async (req: Request, res: Response, next: NextFuncti
 export const getModules = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = (req as any).user.id;
-        const modules = await classroomService.getModulesWithProgress(req.params.id, userId);
+        const modules = await classroomService.getModulesWithProgress(req.params.id as string, userId);
         res.json({ success: true, data: modules });
     } catch (error) {
         next(error);
@@ -83,7 +83,7 @@ export const getModules = async (req: Request, res: Response, next: NextFunction
 export const completeModule = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = (req as any).user.id;
-        const result = await classroomService.completeModule(userId, req.params.moduleId, req.params.id);
+        const result = await classroomService.completeModule(userId, req.params.moduleId as string, req.params.id as string);
         res.json({ success: true, data: result });
     } catch (error) {
         next(error);
@@ -95,7 +95,7 @@ export const completeModule = async (req: Request, res: Response, next: NextFunc
 export const createMaterial = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { title, description, fileUrl, type } = req.body;
-        const material = await classroomService.createMaterial(req.params.id, { title, description, fileUrl, type });
+        const material = await classroomService.createMaterial(req.params.id as string, { title, description, fileUrl, type });
         res.status(201).json({ success: true, data: material });
     } catch (error) {
         next(error);
@@ -104,7 +104,7 @@ export const createMaterial = async (req: Request, res: Response, next: NextFunc
 
 export const getMaterials = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const materials = await classroomService.getMaterials(req.params.id);
+        const materials = await classroomService.getMaterials(req.params.id as string);
         res.json({ success: true, data: materials });
     } catch (error) {
         next(error);
@@ -116,7 +116,7 @@ export const getMaterials = async (req: Request, res: Response, next: NextFuncti
 export const createQuiz = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { title, description, timeLimit, points, questions } = req.body;
-        const quiz = await classroomService.createQuiz(req.params.id, { title, description, timeLimit, points, questions });
+        const quiz = await classroomService.createQuiz(req.params.id as string, { title, description, timeLimit, points, questions });
         res.status(201).json({ success: true, data: quiz });
     } catch (error) {
         next(error);
@@ -125,7 +125,7 @@ export const createQuiz = async (req: Request, res: Response, next: NextFunction
 
 export const getQuizzes = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const quizzes = await classroomService.getQuizzes(req.params.id);
+        const quizzes = await classroomService.getQuizzes(req.params.id as string);
         res.json({ success: true, data: quizzes });
     } catch (error) {
         next(error);
@@ -137,9 +137,9 @@ export const getQuiz = async (req: Request, res: Response, next: NextFunction) =
         const user = (req as any).user;
         let quiz;
         if (user.role === "TEACHER") {
-            quiz = await classroomService.getQuiz(req.params.quizId);
+            quiz = await classroomService.getQuiz(req.params.quizId as string);
         } else {
-            quiz = await classroomService.getQuizForStudent(req.params.quizId);
+            quiz = await classroomService.getQuizForStudent(req.params.quizId as string);
         }
         res.json({ success: true, data: quiz });
     } catch (error) {
@@ -151,7 +151,7 @@ export const submitQuiz = async (req: Request, res: Response, next: NextFunction
     try {
         const userId = (req as any).user.id;
         const { answers } = req.body;
-        const result = await classroomService.submitQuiz(userId, req.params.quizId, answers);
+        const result = await classroomService.submitQuiz(userId, req.params.quizId as string, answers);
         res.json({ success: true, data: result });
     } catch (error) {
         next(error);
@@ -162,7 +162,7 @@ export const submitQuiz = async (req: Request, res: Response, next: NextFunction
 
 export const getLeaderboard = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const leaderboard = await classroomService.getLeaderboard(req.params.id);
+        const leaderboard = await classroomService.getLeaderboard(req.params.id as string);
         res.json({ success: true, data: leaderboard });
     } catch (error) {
         next(error);
