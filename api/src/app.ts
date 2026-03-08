@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: ["http://localhost:5173", "https://edu-guru-frontend.vercel.app"],
+        origin: ["http://localhost:5173", "http://localhost:3000", "https://edu-guru-frontend.vercel.app"],
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
